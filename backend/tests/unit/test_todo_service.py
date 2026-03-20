@@ -39,6 +39,20 @@ class TestCreateTodo:
         assert second.id == 2
 
 
+class TestGetByIdTodo:
+    def test_get_by_id_returns_todo(self, service):
+        created = service.create(TodoCreate(title="Task"))
+
+        result = service.get_by_id(created.id)
+
+        assert result.id == created.id
+        assert result.title == "Task"
+
+    def test_get_by_id_invalid_id_raises_not_found(self, service):
+        with pytest.raises(NotFoundError):
+            service.get_by_id(999)
+
+
 class TestUpdateTodo:
     def test_toggle_done(self, service):
         created = service.create(TodoCreate(title="Task"))

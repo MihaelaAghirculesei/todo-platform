@@ -1,3 +1,9 @@
+import re
+
+# ISO 8601 UTC: e.g. "2026-02-12T10:30:00Z"
+_ISO_8601_UTC = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$")
+
+
 class TestHealthEndpoint:
     def test_health_returns_ok(self, client):
         response = client.get("/health")
@@ -21,7 +27,9 @@ class TestTodosEndpoints:
         assert created["title"] == "Buy milk"
         assert created["done"] is False
         assert "id" in created
-        assert "created_at" in created
+        assert _ISO_8601_UTC.match(created["created_at"]), (
+            f"created_at must be ISO 8601 UTC (e.g. '2026-02-12T10:30:00Z'), got: {created['created_at']!r}"
+        )
 
         list_response = client.get("/todos")
         todos = list_response.json()

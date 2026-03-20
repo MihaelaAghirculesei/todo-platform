@@ -4,7 +4,6 @@ Request/response DTOs with validation.
 """
 
 from pydantic import BaseModel, ConfigDict, Field, field_serializer
-from typing import Optional
 from datetime import datetime
 
 class TodoCreate(BaseModel):
@@ -17,11 +16,11 @@ class TodoCreate(BaseModel):
 
 class TodoUpdate(BaseModel):
     """Schema for updating an existing todo."""
-    title: Optional[str] = Field(
+    title: str | None = Field(
         None,
         description="Todo title, 1-200 characters"
     )
-    done: Optional[bool] = Field(
+    done: bool | None = Field(
         None,
         description="Completion status"
     )

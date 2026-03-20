@@ -20,7 +20,7 @@ def create_todo(payload: TodoCreate, service: TodoService = Depends(get_todo_ser
 @router.patch("/{todo_id}", response_model=TodoOut)
 def update_todo(
     todo_id: int = Path(..., gt=0),
-    payload: TodoUpdate = ...,
+    payload: TodoUpdate,
     service: TodoService = Depends(get_todo_service),
 ):
     return service.update(todo_id, payload)

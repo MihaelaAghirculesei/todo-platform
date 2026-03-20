@@ -29,10 +29,10 @@ class TestTodosEndpoints:
         assert len(todos) == 1
         assert todos[0]["id"] == created["id"]
 
-    def test_create_invalid_title_returns_422(self, client):
+    def test_create_invalid_title_returns_400(self, client):
         response = client.post("/todos", json={"title": ""})
 
-        assert response.status_code == 422
+        assert response.status_code == 400
 
     def test_patch_updates_done(self, client):
         create_response = client.post("/todos", json={"title": "Task"})

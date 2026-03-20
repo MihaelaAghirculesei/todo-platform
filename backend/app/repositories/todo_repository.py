@@ -1,6 +1,5 @@
 import threading
 from datetime import datetime, timezone
-from typing import Optional
 
 from ..schemas.todo import TodoOut
 
@@ -15,7 +14,7 @@ class TodoRepository:
         with self._lock:
             return list(self._todos.values())
 
-    def get_by_id(self, todo_id: int) -> Optional[TodoOut]:
+    def get_by_id(self, todo_id: int) -> TodoOut | None:
         with self._lock:
             return self._todos.get(todo_id)
 
@@ -31,7 +30,7 @@ class TodoRepository:
             self._todos[todo.id] = todo
             return todo
 
-    def update(self, todo_id: int, title: Optional[str] = None, done: Optional[bool] = None) -> Optional[TodoOut]:
+    def update(self, todo_id: int, title: str | None = None, done: bool | None = None) -> TodoOut | None:
         with self._lock:
             todo = self._todos.get(todo_id)
             if todo is None:

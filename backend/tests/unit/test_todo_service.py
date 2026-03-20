@@ -1,6 +1,6 @@
 import pytest
 
-from app.exceptions import NotFoundError
+from app.exceptions import InvalidTitleError, NotFoundError
 from app.schemas.todo import TodoCreate, TodoUpdate
 
 class TestCreateTodo:
@@ -15,23 +15,21 @@ class TestCreateTodo:
         assert result.created_at is not None
 
     def test_create_trims_whitespace(self, service):
-        payload = TodoCreate(title="  Buy milk  ")
-
-        result = service.create(payload)
+        result = service.create(TodoCreate(title="  Buy milk  "))
 
         assert result.title == "Buy milk"
 
-    def test_create_empty_title_rejected(self):
-        with pytest.raises(Exception):
-            TodoCreate(title="")
+    def test_create_empty_title_rejected(self, service):
+        with pytest.raises(InvalidTitleError):
+            service.create(TodoCreate(title=""))
 
-    def test_create_whitespace_only_title_rejected(self):
-        with pytest.raises(Exception):
-            TodoCreate(title="   ")
+    def test_create_whitespace_only_title_rejected(self, service):
+        with pytest.raises(InvalidTitleError):
+            service.create(TodoCreate(title="   "))
 
-    def test_create_title_too_long_rejected(self):
-        with pytest.raises(Exception):
-            TodoCreate(title="a" * 201)
+    def test_create_title_too_long_rejected(self, service):
+        with pytest.raises(InvalidTitleError):
+            service.create(TodoCreate(title="a" * 201))
 
     def test_create_increments_id(self, service):
         first = service.create(TodoCreate(title="First"))

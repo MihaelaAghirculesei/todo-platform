@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Path, status
 
 from ...schemas.todo import TodoCreate, TodoOut, TodoUpdate
 from ...services.todo_service import TodoService
@@ -19,13 +19,16 @@ def create_todo(payload: TodoCreate, service: TodoService = Depends(get_todo_ser
 
 @router.patch("/{todo_id}", response_model=TodoOut)
 def update_todo(
-    todo_id: int,
-    payload: TodoUpdate,
+    todo_id: int = Path(..., gt=0),
+    payload: TodoUpdate = ...,
     service: TodoService = Depends(get_todo_service),
 ):
     return service.update(todo_id, payload)
 
 
 @router.delete("/{todo_id}", status_code=status.HTTP_204_NO_CONTENT)
-def delete_todo(todo_id: int, service: TodoService = Depends(get_todo_service)):
+def delete_todo(
+    todo_id: int = Path(..., gt=0),
+    service: TodoService = Depends(get_todo_service),
+):
     service.delete(todo_id)

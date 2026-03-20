@@ -72,3 +72,13 @@ class TestTodosEndpoints:
         response = client.delete("/todos/999")
 
         assert response.status_code == 404
+
+    def test_patch_negative_id_returns_400(self, client):
+        response = client.patch("/todos/-1", json={"done": True})
+
+        assert response.status_code == 400
+
+    def test_delete_negative_id_returns_400(self, client):
+        response = client.delete("/todos/-1")
+
+        assert response.status_code == 400

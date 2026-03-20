@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 
 from .api.router import api_router
 from .core.config import settings
-from .exceptions import NotFoundError
+from .exceptions import InvalidTitleError, NotFoundError
 
 app = FastAPI(title="Todo Platform API")
 
@@ -15,9 +15,16 @@ def not_found_handler(request: Request, exc: NotFoundError) -> JSONResponse:
     return JSONResponse(status_code=404, content={"detail": str(exc)})
 
 
+@app.exception_handler(InvalidTitleError)
+def invalid_title_handler(request: Request, exc: InvalidTitleError) -> JSONResponse:
+    return JSONResponse(status_code=400, content={"detail": str(exc)})
+
+
 @app.exception_handler(RequestValidationError)
 def validation_error_handler(request: Request, exc: RequestValidationError) -> JSONResponse:
-    return JSONResponse(status_code=400, content={"detail": exc.errors()})
+    first_error = exc.errors()[0]
+    message = first_error.get("msg", "Invalid request")
+    return JSONResponse(status_code=400, content={"detail": message})
 
 app.add_middleware(
     CORSMiddleware,

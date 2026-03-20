@@ -3,13 +3,13 @@ Pydantic schemas for Todo entity.
 Request/response DTOs with validation.
 """
 
-from pydantic import BaseModel, ConfigDict, Field, constr, field_serializer
+from pydantic import BaseModel, ConfigDict, Field, field_serializer
 from typing import Optional
 from datetime import datetime
 
 class TodoCreate(BaseModel):
     """Schema for creating a new todo."""
-    title: constr(min_length=1, max_length=200, strip_whitespace=True) = Field(
+    title: str = Field(
         ...,
         description="Todo title, 1-200 characters",
         json_schema_extra={"example": "Buy groceries"},
@@ -17,7 +17,7 @@ class TodoCreate(BaseModel):
 
 class TodoUpdate(BaseModel):
     """Schema for updating an existing todo."""
-    title: Optional[constr(min_length=1, max_length=200, strip_whitespace=True)] = Field(
+    title: Optional[str] = Field(
         None,
         description="Todo title, 1-200 characters"
     )

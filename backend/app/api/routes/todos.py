@@ -1,3 +1,5 @@
+from typing import Annotated
+
 from fastapi import APIRouter, Depends, Path, status
 
 from ...schemas.todo import TodoCreate, TodoOut, TodoUpdate
@@ -19,9 +21,9 @@ def create_todo(payload: TodoCreate, service: TodoService = Depends(get_todo_ser
 
 @router.patch("/{todo_id}", response_model=TodoOut)
 def update_todo(
-    todo_id: int = Path(..., gt=0),
+    todo_id: Annotated[int, Path(gt=0)],
     payload: TodoUpdate,
-    service: TodoService = Depends(get_todo_service),
+    service: Annotated[TodoService, Depends(get_todo_service)],
 ):
     return service.update(todo_id, payload)
 

@@ -56,6 +56,11 @@ pytest -v
 
 See [docs/api-contract.md](../docs/api-contract.md) for the full API contract.
 
+## Contributors
+
+- [MihaelaAghirculesei](https://github.com/MihaelaAghirculesei)
+- [AlSweidanAhmad](https://github.com/AlSweidanAhmad)
+
 ## Project Structure
 
 ```

@@ -7,7 +7,7 @@ REST API built with FastAPI. Provides CRUD operations for managing todos.
 - Python 3.12+
 - FastAPI
 - Pydantic v2
-- In-memory storage (no database required)
+- SQLAlchemy 2.0 + SQLite
 
 ## Setup
 
@@ -73,15 +73,20 @@ backend/
 │   │       ├── health.py      # GET /health
 │   │       └── todos.py       # CRUD /todos
 │   ├── core/
-│   │   └── config.py          # App settings
+│   │   └── config.py          # App settings (database_url, cors, …)
+│   ├── db/
+│   │   ├── base.py            # SQLAlchemy DeclarativeBase
+│   │   └── session.py         # engine, SessionLocal, get_db
+│   ├── models/
+│   │   └── todo_model.py      # SQLAlchemy ORM model
 │   ├── repositories/
-│   │   └── todo_repository.py # In-memory data access
+│   │   └── todo_repository.py # SQLAlchemy data access layer
 │   ├── schemas/
 │   │   └── todo.py            # Pydantic DTOs
 │   └── services/
 │       └── todo_service.py    # Business logic
 └── tests/
-    ├── conftest.py            # Shared fixtures
+    ├── conftest.py            # Shared fixtures (SQLite in-memory)
     ├── unit/
     │   └── test_todo_service.py
     └── integration/

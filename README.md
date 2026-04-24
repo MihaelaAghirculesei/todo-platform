@@ -57,7 +57,7 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 ## Project Structure
 
 ```
-todo-plattform/
+todo-platform/
 ├── backend/
 │   ├── app/
 │   │   ├── api/
@@ -291,7 +291,7 @@ cd backend
 pytest -v
 ```
 
-Expected output: **23 passed**.
+Expected output: **23 passed in 0.19s**.
 
 ```
 tests/integration/test_routes.py::TestHealthEndpoint::test_health_returns_ok PASSED
@@ -318,7 +318,7 @@ tests/unit/test_todo_service.py::TestUpdateTodo::test_update_invalid_id_raises_n
 tests/unit/test_todo_service.py::TestDeleteTodo::test_delete_existing PASSED
 tests/unit/test_todo_service.py::TestDeleteTodo::test_delete_invalid_id_raises_not_found PASSED
 
-23 passed
+23 passed in 0.19s
 ```
 
 > Tests run against an **SQLite in-memory database** — no file written, no cleanup needed.

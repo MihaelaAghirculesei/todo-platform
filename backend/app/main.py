@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
@@ -5,9 +7,19 @@ from fastapi.responses import JSONResponse
 
 from .api.router import api_router
 from .core.config import settings
+from .db.base import Base
+from .db.session import engine
 from .exceptions import InvalidTitleError, NotFoundError
+from .models.todo_model import TodoModel as _TodoModel  # noqa: F401 — registers ORM model with Base.metadata
 
-app = FastAPI(title="Todo Platform API")
+
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    Base.metadata.create_all(bind=engine)
+    yield
+
+
+app = FastAPI(title="Todo Platform API", lifespan=lifespan, redoc_url=None)
 
 
 @app.exception_handler(NotFoundError)
@@ -25,6 +37,7 @@ def validation_error_handler(request: Request, exc: RequestValidationError) -> J
     first_error = exc.errors()[0]
     message = first_error.get("msg", "Invalid request")
     return JSONResponse(status_code=400, content={"detail": message})
+
 
 app.add_middleware(
     CORSMiddleware,

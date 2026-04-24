@@ -15,7 +15,7 @@ Responsibilities:
 - Design and implementation of the REST API
 - Definition of endpoints and request/response models
 - Business logic (services)
-- Data access layer (repository, initially in-memory)
+- Data access layer (repository, SQLAlchemy + SQLite)
 - Backend testing
 
 Not responsible for:

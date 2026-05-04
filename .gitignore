@@ -17,3 +17,8 @@ dist/
 
 # Persönliche Notizen
 LERNGUIDE.md
+# SQLite databases
+*.db
+*.db-journal
+*.db-shm
+*.db-wal

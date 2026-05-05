@@ -5,3 +5,16 @@ services:
     rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: CORS_ORIGINS
+        value: '["https://todo-frontend-aghirculesei.onrender.com"]'
+
+  - type: web
+    name: todo-frontend-aghirculesei
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://todo-aghirculesei.onrender.com

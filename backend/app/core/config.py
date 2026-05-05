@@ -12,7 +12,7 @@ _DEFAULT_DB_URL = f"sqlite:///{_BACKEND_DIR / 'todos.db'}"
 class Settings(BaseSettings):
     app_host: str = "0.0.0.0"
     app_port: int = 8000
-    cors_origins: list[str] = ["http://localhost:5173"]
+    cors_origins: list[str] = ["http://localhost:5173", "http://localhost:5175", "http://localhost:5174"]
     database_url: str = _DEFAULT_DB_URL
 
     model_config = {"env_file": ".env"}

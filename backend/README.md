@@ -4,7 +4,7 @@ REST API built with FastAPI. Provides CRUD operations for managing todos.
 
 ## Tech Stack
 
-- Python 3.12+
+- Python 3.11+
 - FastAPI
 - Pydantic v2
 - SQLAlchemy 2.0 + SQLite

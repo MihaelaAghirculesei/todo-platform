@@ -6,7 +6,9 @@ Both sides must follow this contract exactly.
 ---
 
 ## Base URL
-http://localhost:8000
+
+Local: http://localhost:8000
+Production: https://todo-aghirculesei.onrender.com
 
 ---
 

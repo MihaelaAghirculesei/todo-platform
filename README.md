@@ -13,6 +13,7 @@
 
 A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQLite**. Clean layered architecture with full CRUD support, input validation, and a comprehensive test suite.
 
+**Live App:** [https://todo-frontend-aghirculesei.onrender.com](https://todo-frontend-aghirculesei.onrender.com)
 **Live API:** [https://todo-aghirculesei.onrender.com](https://todo-aghirculesei.onrender.com)
 **Interactive docs:** [https://todo-aghirculesei.onrender.com/docs](https://todo-aghirculesei.onrender.com/docs)
 

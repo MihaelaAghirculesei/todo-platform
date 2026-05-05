@@ -18,12 +18,10 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 
 ### API Documentation (Swagger UI)
 
-<!-- Add a screenshot of http://localhost:8000/docs after starting the server -->
 ![API Docs](docs/screenshots/api-docs.png)
 
 ### Test Suite — 23/23 Passing
 
-<!-- Run: cd backend && pytest -v, then screenshot the terminal output -->
 ![Tests Passing](docs/screenshots/tests-passing.png)
 
 ---

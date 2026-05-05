@@ -3,7 +3,8 @@
 > **Note:** This is a personal fork of [AlSweidanAhmad/todo-platform](https://github.com/AlSweidanAhmad/todo-platform).
 > Changes to this README and the backend implementation do not affect the original repository.
 
-![Python](https://img.shields.io/badge/Python-3.13%2B-blue?logo=python&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python&logoColor=white)
+![Live](https://img.shields.io/badge/Live%20on-Render-46E3B7?logo=render&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0%2B-red?logo=sqlalchemy&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-embedded-003B57?logo=sqlite&logoColor=white)
@@ -11,6 +12,11 @@
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQLite**. Clean layered architecture with full CRUD support, input validation, and a comprehensive test suite.
+
+**Live API:** [https://todo-aghirculesei.onrender.com](https://todo-aghirculesei.onrender.com)
+**Interactive docs:** [https://todo-aghirculesei.onrender.com/docs](https://todo-aghirculesei.onrender.com/docs)
+
+> Free tier on Render — first request after inactivity may take ~50 seconds to spin up.
 
 ---
 
@@ -31,7 +37,7 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 - Full **CRUD** for todos: create, list, update (title + done), delete
 - **Input validation**: empty titles, whitespace-only titles, titles > 200 chars are rejected
 - **ISO 8601 UTC** timestamps on all responses (`"created_at": "2026-02-12T10:30:00Z"`)
-- **CORS** configured for local frontend at `http://localhost:5173`
+- **CORS** configured for local frontend (`localhost:5173/5174/5175`); override via `CORS_ORIGINS` env var for production
 - Tables created automatically on startup via SQLAlchemy `Base.metadata.create_all`
 - **23 tests** (unit + integration) using SQLite in-memory database
 
@@ -48,7 +54,7 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 | Config | pydantic-settings |
 | Server | Uvicorn |
 | Testing | Pytest + HTTPX |
-| Python | 3.13+ |
+| Python | 3.11+ |
 
 ---
 
@@ -85,10 +91,12 @@ todo-platform/
 │   │   ├── unit/
 │   │   │   └── test_todo_service.py    # Service tests (13)
 │   │   └── conftest.py                 # Fixtures
+│   ├── .python-version                 # Pins Python 3.11.9 for Render
 │   └── requirements.txt
 ├── docs/
 │   ├── api-contract.md
-│   └── screenshots/                    # Add screenshots here
+│   └── screenshots/
+├── render.yaml                         # Render deployment config
 └── frontend/                           # React frontend
 ```
 
@@ -98,7 +106,7 @@ todo-platform/
 
 ### Prerequisites
 
-- Python 3.13+
+- Python 3.11+
 - Git
 
 ### 1. Clone your fork
@@ -144,14 +152,15 @@ All settings have defaults and work out of the box. Override via `.env` file ins
 APP_HOST=0.0.0.0
 APP_PORT=8000
 DATABASE_URL=sqlite:///./todos.db
-CORS_ORIGINS=["http://localhost:5173"]
+CORS_ORIGINS=["http://localhost:5173","http://localhost:5174","http://localhost:5175"]
 ```
 
 ---
 
 ## API Reference
 
-Interactive docs: **[http://localhost:8000/docs](http://localhost:8000/docs)**
+Interactive docs (local): **[http://localhost:8000/docs](http://localhost:8000/docs)**
+Interactive docs (live): **[https://todo-aghirculesei.onrender.com/docs](https://todo-aghirculesei.onrender.com/docs)**
 
 ### Endpoints
 

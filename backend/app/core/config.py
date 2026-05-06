@@ -22,5 +22,10 @@ class Settings(BaseSettings):
 
     model_config = {"env_file": ".env"}
 
+    @property
+    def sqlalchemy_database_url(self) -> str:
+        # Render provides postgres:// but SQLAlchemy 2.0 requires postgresql://
+        return self.database_url.replace("postgres://", "postgresql://", 1)
+
 
 settings = Settings()

@@ -1,3 +1,9 @@
+databases:
+  - name: todo-db
+    plan: free
+    databaseName: todo
+    user: todo_user
+
 services:
   - type: web
     name: todo-aghirculesei
@@ -8,6 +14,10 @@ services:
     envVars:
       - key: CORS_ORIGINS
         value: '["https://todo-frontend-aghirculesei.onrender.com"]'
+      - key: DATABASE_URL
+        fromDatabase:
+          name: todo-db
+          property: connectionString
 
   - type: web
     name: todo-frontend-aghirculesei

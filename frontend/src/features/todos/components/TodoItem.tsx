@@ -17,7 +17,7 @@ export function TodoItem({ todo, onToggle, onDelete }: Props) {
             <span style={{ textDecoration: todo.done ? "line-through" : "none" }}>
                 {todo.title}
             </span>
-            <button onClick={() => onDelete(todo.id)}>Delete</button>
+            <button onClick={() => onDelete(todo.id)} style={{ marginLeft: "12px" }}>Delete</button>
         </li>
     );
 }

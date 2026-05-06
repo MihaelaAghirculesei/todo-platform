@@ -6,13 +6,19 @@ interface Props {
 
 export function TodoForm({ onSubmit }: Props) {
     const [title, setTitle] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         const trimmed = title.trim();
-        if (!trimmed) return;
-        await onSubmit(trimmed);
-        setTitle("");
+        if (!trimmed || isSubmitting) return;
+        setIsSubmitting(true);
+        try {
+            await onSubmit(trimmed);
+            setTitle("");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -24,7 +30,7 @@ export function TodoForm({ onSubmit }: Props) {
                 placeholder="New todo..."
                 maxLength={200}
             />
-            <button type="submit">Add</button>
+            <button type="submit" disabled={isSubmitting || !title.trim()}>Add</button>
         </form>
     );
 }

@@ -13,7 +13,8 @@ export async function http<T>(
     });
     
     if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const body = await response.json().catch(() => ({}));
+        throw new Error((body as { detail?: string }).detail ?? `HTTP error! status: ${response.status}`);
     }
 
     if (response.status === 204 || response.headers.get("content-length") === "0") {

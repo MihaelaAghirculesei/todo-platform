@@ -39,20 +39,22 @@ export function useTodos(): UseTodosReturn {
     }, [fetchTodos]);
 
     const addTodo = async (title: string) => {
+        setError(null);
         try {
             const newTodo = await createTodo({ title });
             setTodos((prev) => [...prev, newTodo]);
-        } catch {
-            setError("Failed to create todo.");
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to create todo.");
         }
     };
 
     const toggleTodo = async (id: number, done: boolean) => {
+        setError(null);
         try {
             const updated = await updateTodo(id, { done });
             setTodos((prev) => prev.map((t) => (t.id === id ? updated : t)));
-        } catch {
-            setError("Failed to update todo.");
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Failed to update todo.");
         }
     };
 

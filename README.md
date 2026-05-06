@@ -7,14 +7,14 @@
 ![Live](https://img.shields.io/badge/Live%20on-Render-46E3B7?logo=render&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0%2B-red?logo=sqlalchemy&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-embedded-003B57?logo=sqlite&logoColor=white)
+![SQLite](https://img.shields.io/badge/SQLite-local-003B57?logo=sqlite&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-production-4169E1?logo=postgresql&logoColor=white)
 ![Pytest](https://img.shields.io/badge/Tests-23%2F23%20passing-brightgreen?logo=pytest&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQLite**. Clean layered architecture with full CRUD support, input validation, and a comprehensive test suite.
+A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQLite** (local) and **PostgreSQL** (production). Clean layered architecture with full CRUD support, input validation, and a comprehensive test suite.
 
 **Live App:** [https://todo-frontend-aghirculesei.onrender.com](https://todo-frontend-aghirculesei.onrender.com)
-**Live API:** [https://todo-aghirculesei.onrender.com](https://todo-aghirculesei.onrender.com)
 **Interactive docs:** [https://todo-aghirculesei.onrender.com/docs](https://todo-aghirculesei.onrender.com/docs)
 
 > Free tier on Render — first request after inactivity may take ~50 seconds to spin up.
@@ -38,7 +38,7 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 - Full **CRUD** for todos: create, list, update (title + done), delete
 - **Input validation**: empty titles, whitespace-only titles, titles > 200 chars are rejected
 - **ISO 8601 UTC** timestamps on all responses (`"created_at": "2026-02-12T10:30:00Z"`)
-- **CORS** configured for local frontend (`localhost:5173/5174/5175`); override via `CORS_ORIGINS` env var for production
+- **CORS** default origins include `localhost:5173/5174/5175` and the production frontend; in production, `CORS_ORIGINS` env var restricts to the production URL only
 - Tables created automatically on startup via SQLAlchemy `Base.metadata.create_all`
 - **23 tests** (unit + integration) using SQLite in-memory database
 
@@ -50,12 +50,13 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 |---|---|
 | Framework | FastAPI 0.115 |
 | ORM | SQLAlchemy 2.0 |
-| Database | SQLite (file: `todos.db`) |
+| Database | SQLite (local) · PostgreSQL (production) |
 | Validation | Pydantic 2.9 |
 | Config | pydantic-settings |
 | Server | Uvicorn |
 | Testing | Pytest + HTTPX |
 | Python | 3.11+ |
+| Frontend | React 18 · TypeScript 5.2 · Vite 4 |
 
 ---
 
@@ -153,7 +154,7 @@ All settings have defaults and work out of the box. Override via `.env` file ins
 APP_HOST=0.0.0.0
 APP_PORT=8000
 DATABASE_URL=sqlite:///./todos.db
-CORS_ORIGINS=["http://localhost:5173","http://localhost:5174","http://localhost:5175"]
+CORS_ORIGINS=["http://localhost:5173","http://localhost:5174","http://localhost:5175","https://todo-frontend-aghirculesei.onrender.com"]
 ```
 
 ---
@@ -348,7 +349,7 @@ HTTP Request
  TodoRepository  (app/repositories/)  ← data access, SQLAlchemy queries
      │
      ▼
- SQLite DB       (todos.db)
+ SQLite (local) · PostgreSQL (production)
 ```
 
 ---
@@ -360,6 +361,3 @@ HTTP Request
 | **Mihaela Aghirculesei** | Backend implementation, SQLAlchemy layer, test suite | [@MihaelaAghirculesei](https://github.com/MihaelaAghirculesei) |
 | **Ahmad Al Sweidan** | Original project author, frontend | [@AlSweidanAhmad](https://github.com/AlSweidanAhmad) |
 
----
-
-*Personal fork — README changes are local to this repository and do not affect [AlSweidanAhmad/todo-platform](https://github.com/AlSweidanAhmad/todo-platform).*

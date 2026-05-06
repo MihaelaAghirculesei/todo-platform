@@ -59,10 +59,14 @@ export function useTodos(): UseTodosReturn {
     const removeTodo = async (id: number) => {
         try {
             await deleteTodo(id);
-            setTodos((prev) => prev.filter((t) => t.id !== id));
-        } catch {
-            setError("Failed to delete todo.");
+        } catch (err) {
+            const is404 = err instanceof Error && err.message.includes("404");
+            if (!is404) {
+                setError("Failed to delete todo.");
+                return;
+            }
         }
+        setTodos((prev) => prev.filter((t) => t.id !== id));
     };
 
     return { todos, loading, error, addTodo, toggleTodo, removeTodo };

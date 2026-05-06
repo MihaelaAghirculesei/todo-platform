@@ -16,6 +16,10 @@ export async function http<T>(
         throw new Error(`HTTP error! status: ${response.status}`);
     }
 
+    if (response.status === 204 || response.headers.get("content-length") === "0") {
+        return undefined as T;
+    }
+
     return response.json();
 }
     

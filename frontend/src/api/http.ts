@@ -1,5 +1,12 @@
 const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000";
 
+export class HttpError extends Error {
+    constructor(message: string, public readonly status: number) {
+        super(message);
+        this.name = "HttpError";
+    }
+}
+
 export async function http<T>(
     path: string,
     options: RequestInit = {}
@@ -14,7 +21,10 @@ export async function http<T>(
     
     if (!response.ok) {
         const body = await response.json().catch(() => ({}));
-        throw new Error((body as { detail?: string }).detail ?? `HTTP error! status: ${response.status}`);
+        throw new HttpError(
+            (body as { detail?: string }).detail ?? `HTTP error! status: ${response.status}`,
+            response.status
+        );
     }
 
     if (response.status === 204 || response.headers.get("content-length") === "0") {

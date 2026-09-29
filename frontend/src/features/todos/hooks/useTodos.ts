@@ -6,6 +6,7 @@ import {
     updateTodo,
     deleteTodo,
 } from "../../../api/todos.api";
+import { HttpError } from "../../../api/http";
 
 interface UseTodosReturn {
     todos: Todo[];
@@ -62,7 +63,7 @@ export function useTodos(): UseTodosReturn {
         try {
             await deleteTodo(id);
         } catch (err) {
-            const is404 = err instanceof Error && err.message.includes("404");
+            const is404 = err instanceof HttpError && err.status === 404;
             if (!is404) {
                 setError("Failed to delete todo.");
                 return;

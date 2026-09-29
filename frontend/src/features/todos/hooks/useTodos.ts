@@ -8,9 +8,32 @@ import {
 } from "../../../api/todos.api";
 import { HttpError } from "../../../api/http";
 
+const CACHE_KEY = "todos-cache-v1";
+// The free backend host sleeps when idle; a response slower than this
+// means it is starting up, so the UI tells the user instead of hanging.
+const WAKING_DELAY_MS = 2000;
+
+function readCache(): Todo[] | null {
+    try {
+        const parsed: unknown = JSON.parse(localStorage.getItem(CACHE_KEY) ?? "null");
+        return Array.isArray(parsed) ? (parsed as Todo[]) : null;
+    } catch {
+        return null;
+    }
+}
+
+function writeCache(todos: Todo[]): void {
+    try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify(todos));
+    } catch {
+        // Storage blocked or full: the cache is only an optimisation.
+    }
+}
+
 interface UseTodosReturn {
     todos: Todo[];
     loading: boolean;
+    waking: boolean;
     error: string | null;
     addTodo: (title: string) => Promise<void>;
     toggleTodo: (id: number, done: boolean) => Promise<void>;
@@ -18,26 +41,44 @@ interface UseTodosReturn {
 }
 
 export function useTodos(): UseTodosReturn {
-    const [todos, setTodos] = useState<Todo[]>([]);
-    const [loading, setLoading] = useState(true);
+    // Stale-while-revalidate: render the last known list immediately,
+    // then replace it with the server's list once it arrives.
+    const [initialCache] = useState(readCache);
+    const [todos, setTodos] = useState<Todo[]>(initialCache ?? []);
+    const [synced, setSynced] = useState(false);
+    const [syncing, setSyncing] = useState(true);
+    const [waking, setWaking] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     const fetchTodos = useCallback(async () => {
-        setLoading(true);
+        setSyncing(true);
         setError(null);
+        const wakingTimer = setTimeout(() => setWaking(true), WAKING_DELAY_MS);
         try {
             const data = await getTodos();
             setTodos(data);
+            setSynced(true);
         } catch {
-            setError("Failed to load todos.");
+            setError(
+                initialCache
+                    ? "Could not reach the server. Showing your last saved todos."
+                    : "Failed to load todos."
+            );
         } finally {
-            setLoading(false);
+            clearTimeout(wakingTimer);
+            setWaking(false);
+            setSyncing(false);
         }
-    }, []);
+    }, [initialCache]);
 
     useEffect(() => {
         fetchTodos();
     }, [fetchTodos]);
+
+    useEffect(() => {
+        // Only persist data confirmed by the server, never the stale copy.
+        if (synced) writeCache(todos);
+    }, [todos, synced]);
 
     const addTodo = async (title: string) => {
         setError(null);
@@ -72,5 +113,7 @@ export function useTodos(): UseTodosReturn {
         setTodos((prev) => prev.filter((t) => t.id !== id));
     };
 
-    return { todos, loading, error, addTodo, toggleTodo, removeTodo };
+    const loading = syncing && !initialCache;
+
+    return { todos, loading, waking, error, addTodo, toggleTodo, removeTodo };
 }

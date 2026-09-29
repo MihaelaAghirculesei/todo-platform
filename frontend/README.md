@@ -32,3 +32,15 @@ src/
       pages/      – TodosPage
 tests/           – Test plan
 ```
+
+## Fast startup (stale-while-revalidate)
+The backend runs on a free host that sleeps when idle, so the first request
+can take up to a minute. To keep the UI instant:
+
+- The last list received from the server is cached in `localStorage` and
+  rendered immediately on the next visit, then replaced by the fresh list.
+- If the server takes longer than 2 s, a "Waking up the server" notice is shown
+  instead of a silent loading state.
+- If the server is unreachable, the cached list stays visible with a warning.
+
+Only data confirmed by the server is written to the cache.

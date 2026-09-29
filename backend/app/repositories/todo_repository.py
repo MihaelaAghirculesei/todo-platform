@@ -11,7 +11,7 @@ class TodoRepository:
         self._db = db
 
     def list_all(self) -> list[TodoOut]:
-        rows = self._db.query(TodoModel).all()
+        rows = self._db.query(TodoModel).order_by(TodoModel.id).all()
         return [self._to_schema(row) for row in rows]
 
     def get_by_id(self, todo_id: int) -> TodoOut | None:

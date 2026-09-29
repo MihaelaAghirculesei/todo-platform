@@ -37,6 +37,14 @@ class TestTodosEndpoints:
         assert len(todos) == 1
         assert todos[0]["id"] == created["id"]
 
+    def test_get_todos_returns_items_ordered_by_id(self, client):
+        ids = [client.post("/todos", json={"title": t}).json()["id"] for t in ("A", "B", "C")]
+        client.patch(f"/todos/{ids[0]}", json={"done": True})
+
+        todos = client.get("/todos").json()
+
+        assert [t["id"] for t in todos] == ids
+
     def test_create_invalid_title_returns_400(self, client):
         response = client.post("/todos", json={"title": ""})
 

@@ -5,7 +5,7 @@
 
 ![Python](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python&logoColor=white)
 ![Live](https://img.shields.io/badge/Live%20on-Render-46E3B7?logo=render&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688?logo=fastapi&logoColor=white)
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0%2B-red?logo=sqlalchemy&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-local-003B57?logo=sqlite&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-production-4169E1?logo=postgresql&logoColor=white)
@@ -48,7 +48,7 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 
 | Layer | Technology |
 |---|---|
-| Framework | FastAPI 0.115 |
+| Framework | FastAPI 0.141 |
 | ORM | SQLAlchemy 2.0 |
 | Database | SQLite (local) · PostgreSQL (production) |
 | Validation | Pydantic 2.9 |
@@ -56,7 +56,7 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 | Server | Uvicorn |
 | Testing | Pytest + HTTPX |
 | Python | 3.11+ |
-| Frontend | React 18 · TypeScript 5.2 · Vite 4 |
+| Frontend | React 18 · TypeScript 5.9 · Vite 4 |
 
 ---
 

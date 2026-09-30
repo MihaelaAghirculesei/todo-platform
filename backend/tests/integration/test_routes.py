@@ -11,6 +11,11 @@ class TestHealthEndpoint:
         assert response.status_code == 200
         assert response.json() == {"status": "ok"}
 
+    def test_health_supports_head_for_uptime_monitors(self, client):
+        response = client.head("/health")
+
+        assert response.status_code == 200
+
 
 class TestTodosEndpoints:
     def test_get_todos_empty(self, client):

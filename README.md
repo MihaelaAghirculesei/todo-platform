@@ -27,7 +27,7 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 
 ![API Docs](docs/screenshots/api-docs.png)
 
-### Test Suite — 23/23 Passing
+### Test Suite — 25/25 Passing
 
 ![Tests Passing](docs/screenshots/tests-passing.png)
 
@@ -40,7 +40,7 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 - **ISO 8601 UTC** timestamps on all responses (`"created_at": "2026-02-12T10:30:00Z"`)
 - **CORS** default origins include `localhost:5173/5174/5175` and the production frontend; in production, `CORS_ORIGINS` env var restricts to the production URL only
 - Tables created automatically on startup via SQLAlchemy `Base.metadata.create_all`
-- **23 tests** (unit + integration) using SQLite in-memory database
+- **25 tests** (unit + integration) using SQLite in-memory database
 
 ---
 
@@ -89,7 +89,7 @@ todo-platform/
 │   │   └── main.py                     # Entry point (lifespan)
 │   ├── tests/
 │   │   ├── integration/
-│   │   │   └── test_routes.py          # API tests (10)
+│   │   │   └── test_routes.py          # API tests (12)
 │   │   ├── unit/
 │   │   │   └── test_todo_service.py    # Service tests (13)
 │   │   └── conftest.py                 # Fixtures
@@ -300,12 +300,14 @@ cd backend
 pytest -v
 ```
 
-Expected output: **23 passed in 0.19s**.
+Expected output: **25 passed**.
 
 ```
 tests/integration/test_routes.py::TestHealthEndpoint::test_health_returns_ok PASSED
+tests/integration/test_routes.py::TestHealthEndpoint::test_health_supports_head_for_uptime_monitors PASSED
 tests/integration/test_routes.py::TestTodosEndpoints::test_get_todos_empty PASSED
 tests/integration/test_routes.py::TestTodosEndpoints::test_create_then_get_returns_created_item PASSED
+tests/integration/test_routes.py::TestTodosEndpoints::test_get_todos_returns_items_ordered_by_id PASSED
 tests/integration/test_routes.py::TestTodosEndpoints::test_create_invalid_title_returns_400 PASSED
 tests/integration/test_routes.py::TestTodosEndpoints::test_patch_updates_done PASSED
 tests/integration/test_routes.py::TestTodosEndpoints::test_patch_nonexistent_returns_404 PASSED
@@ -327,7 +329,7 @@ tests/unit/test_todo_service.py::TestUpdateTodo::test_update_invalid_id_raises_n
 tests/unit/test_todo_service.py::TestDeleteTodo::test_delete_existing PASSED
 tests/unit/test_todo_service.py::TestDeleteTodo::test_delete_invalid_id_raises_not_found PASSED
 
-23 passed in 0.19s
+25 passed in 0.14s
 ```
 
 > Tests run against an **SQLite in-memory database** — no file written, no cleanup needed.

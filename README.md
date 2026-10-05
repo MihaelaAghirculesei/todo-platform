@@ -2,6 +2,7 @@
 
 > **Note:** This is a personal fork of [AlSweidanAhmad/todo-platform](https://github.com/AlSweidanAhmad/todo-platform).
 > Changes to this README and the backend implementation do not affect the original repository.
+> My backend on its own, with CI: [todo-api](https://github.com/MihaelaAghirculesei/todo-api).
 
 ![Python](https://img.shields.io/badge/Python-3.11%2B-blue?logo=python&logoColor=white)
 ![Live](https://img.shields.io/badge/Live%20on-Render-46E3B7?logo=render&logoColor=white)
@@ -12,7 +13,7 @@
 ![Pytest](https://img.shields.io/badge/Tests-25%2F25%20passing-brightgreen?logo=pytest&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
-A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQLite** (local) and **PostgreSQL** (production). Clean layered architecture with full CRUD support, input validation, and a comprehensive test suite.
+A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.1**, backed by **SQLite** (local) and **PostgreSQL** (production). Clean layered architecture with full CRUD support, input validation, and a comprehensive test suite.
 
 **Live App:** [https://todo-frontend-aghirculesei.onrender.com](https://todo-frontend-aghirculesei.onrender.com)
 **Interactive docs:** [https://todo-aghirculesei.onrender.com/docs](https://todo-aghirculesei.onrender.com/docs)
@@ -169,11 +170,13 @@ Interactive docs (live): **[https://todo-aghirculesei.onrender.com/docs](https:/
 
 | Method | Path | Description |
 |--------|------|-------------|
-| `GET` | `/health` | Health check |
+| `GET`, `HEAD` | `/health` | Health check (HEAD for uptime monitors) |
 | `GET` | `/todos` | List all todos |
 | `POST` | `/todos` | Create a todo |
 | `PATCH` | `/todos/{id}` | Update title and/or done status |
 | `DELETE` | `/todos/{id}` | Delete a todo |
+
+Status codes and the error format are documented in [docs/api-contract.md](docs/api-contract.md#status-codes).
 
 ---
 
@@ -278,7 +281,7 @@ curl -X POST http://localhost:8000/todos \
 ```
 
 ```json
-{ "detail": "Title must be between 1 and 200 characters." }
+{ "detail": "Title must not be empty" }
 ```
 
 ```bash
@@ -289,7 +292,7 @@ curl -X PATCH http://localhost:8000/todos/999 \
 ```
 
 ```json
-{ "detail": "Todo with id 999 not found." }
+{ "detail": "Todo 999 not found" }
 ```
 
 ---

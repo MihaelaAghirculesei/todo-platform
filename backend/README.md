@@ -35,6 +35,7 @@ API available at `http://localhost:8000`
 ## Run Tests
 
 ```bash
+pip install -r requirements-dev.txt
 pytest
 ```
 

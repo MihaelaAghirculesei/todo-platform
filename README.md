@@ -94,7 +94,8 @@ todo-platform/
 │   │   │   └── test_todo_service.py    # Service tests (13)
 │   │   └── conftest.py                 # Fixtures
 │   ├── .python-version                 # Pins Python 3.11.9 for Render
-│   └── requirements.txt
+│   ├── requirements.txt
+│   └── requirements-dev.txt            # Test dependencies
 ├── docs/
 │   ├── api-contract.md
 │   └── screenshots/
@@ -297,6 +298,7 @@ curl -X PATCH http://localhost:8000/todos/999 \
 
 ```bash
 cd backend
+pip install -r requirements-dev.txt
 pytest -v
 ```
 

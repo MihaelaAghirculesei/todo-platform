@@ -49,8 +49,8 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 | Layer | Technology |
 |---|---|
 | Framework | FastAPI 0.141 |
-| ORM | SQLAlchemy 2.0 |
-| Database | SQLite (local) · PostgreSQL (production) |
+| ORM | SQLAlchemy 2.1 (2.0-style API) |
+| Database | SQLite (local) · PostgreSQL via psycopg 3 (production) |
 | Validation | Pydantic 2.9 |
 | Config | pydantic-settings |
 | Server | Uvicorn |

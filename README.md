@@ -9,7 +9,7 @@
 ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-2.0%2B-red?logo=sqlalchemy&logoColor=white)
 ![SQLite](https://img.shields.io/badge/SQLite-local-003B57?logo=sqlite&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-production-4169E1?logo=postgresql&logoColor=white)
-![Pytest](https://img.shields.io/badge/Tests-23%2F23%20passing-brightgreen?logo=pytest&logoColor=white)
+![Pytest](https://img.shields.io/badge/Tests-25%2F25%20passing-brightgreen?logo=pytest&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-lightgrey)
 
 A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQLite** (local) and **PostgreSQL** (production). Clean layered architecture with full CRUD support, input validation, and a comprehensive test suite.
@@ -51,7 +51,7 @@ A RESTful Todo API built with **FastAPI** and **SQLAlchemy 2.0**, backed by **SQ
 | Framework | FastAPI 0.141 |
 | ORM | SQLAlchemy 2.1 (2.0-style API) |
 | Database | SQLite (local) · PostgreSQL via psycopg 3 (production) |
-| Validation | Pydantic 2.9 |
+| Validation | Pydantic 2.13 |
 | Config | pydantic-settings |
 | Server | Uvicorn |
 | Testing | Pytest + HTTPX |
